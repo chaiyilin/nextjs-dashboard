@@ -1,37 +1,32 @@
 "use client";
 
 import { useDebouncedCallback } from "use-debounce";
+import { useState, useDeferredValue, useEffect } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
+// debounce+useDeferredValue to reduce number of URL updates and re-renders
 export default function Search({ placeholder }: { placeholder: string }) {
+  const [term, setTerm] = useState("");
+  const deferredTerm = useDeferredValue(term);
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  // const handleSearch = useDebouncedCallback((term) => {
-  //   console.log(`Searching... ${term}`);
+  const handleSearch = useDebouncedCallback((term) => {
+    setTerm(term);
+  }, 300);
 
-  //   const params = new URLSearchParams(searchParams);
-  //   if (term) {
-  //     params.set("query", term);
-  //   } else {
-  //     params.delete("query");
-  //   }
-  //   replace(`${pathname}?${params.toString()}`);
-  // }, 300);
-
-  const handleSearch = (term: string) => {
-    console.log(`Searching... ${term}`);
-
+  useEffect(() => {
     const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set("query", term);
+    if (deferredTerm) {
+      params.set("query", deferredTerm);
     } else {
       params.delete("query");
     }
     replace(`${pathname}?${params.toString()}`);
-  };
+  }, [deferredTerm]);
 
   return (
     <div className="relative flex flex-1 shrink-0">
