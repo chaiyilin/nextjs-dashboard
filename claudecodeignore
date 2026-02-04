@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+out/
+*.exe
+*.dll
+
+# Large assets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.mp4
+*.pdf
+
+# Logs and Temp
+*.log
+tmp/
+temp/
+.cache/
+
+# Git and IDE
+.git/
+.vscode/
+.idea/
