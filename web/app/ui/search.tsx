@@ -20,6 +20,8 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
+    params.set("page", "1");
+
     if (deferredTerm) {
       params.set("query", deferredTerm);
     } else {
