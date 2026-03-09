@@ -1,0 +1,11 @@
+{
+  "name": "infra",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build":  { "executor": "nx:run-script", "options": { "script": "build" } },
+    "synth":  { "executor": "nx:run-script", "options": { "script": "synth" } },
+    "deploy": { "executor": "nx:run-script", "options": { "script": "deploy" } },
+    "diff":   { "executor": "nx:run-script", "options": { "script": "diff" } }
+  }
+}

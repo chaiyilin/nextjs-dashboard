@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -9,8 +9,9 @@
 /coverage
 
 # next.js
-/.next/
+.next/
 /out/
+.open-next/
 
 # production
 /build
@@ -34,3 +35,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# nx
+.nx/cache
+.nx/workspace-data
+
+# infra
+infra/dist/
+infra/cdk.out/
