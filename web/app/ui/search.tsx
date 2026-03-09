@@ -7,11 +7,11 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 // debounce+useDeferredValue to reduce number of URL updates and re-renders
 export default function Search({ placeholder }: { placeholder: string }) {
-  const [term, setTerm] = useState("");
-  const deferredTerm = useDeferredValue(term);
-
   const searchParams = useSearchParams();
   const pathname = usePathname();
+
+  const [term, setTerm] = useState(searchParams.get("query") ?? "");
+  const deferredTerm = useDeferredValue(term);
   const { replace } = useRouter();
 
   const handleSearch = useDebouncedCallback((term) => {
