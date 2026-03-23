@@ -34,10 +34,10 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ap-southeast-4
+          aws-region: us-east-1
 
       - name: Deploy CDK
-        run: pnpm --filter @repo/infra deploy
+        run: pnpm --filter @repo/infra-app-stack deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}

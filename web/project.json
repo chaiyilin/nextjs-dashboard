@@ -3,8 +3,9 @@
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "targets": {
-    "dev":   { "executor": "nx:run-script", "options": { "script": "dev" } },
-    "build": { "executor": "nx:run-script", "options": { "script": "build" } },
-    "start": { "executor": "nx:run-script", "options": { "script": "start" } }
+    "dev":            { "executor": "nx:run-script", "options": { "script": "dev" } },
+    "build":          { "executor": "nx:run-script", "options": { "script": "build" } },
+    "opennext-build": { "executor": "nx:run-script", "options": { "script": "opennext-build" } },
+    "start":          { "executor": "nx:run-script", "options": { "script": "start" } }
   }
 }

@@ -1,9 +1,8 @@
-# [Project Name] | React 2026
+# [Project Name] | nextjs-dashboard - monorepo
 
 ## 🎯 Project Context
 
-Modern React 19 app utilizing Server Components (if Next.js) or Vite 6.
-Goal: High-performance, accessible, and type-safe UI.
+this is a monorepo for nextjs-dashboard managed by nx, which includes the web application and shared packages. The web application is built with Next.js 13 using the app directory and React 19 features. The goal is to create a high-performance, accessible, and type-safe dashboard UI.
 
 ## 🛠 Tech Stack
 

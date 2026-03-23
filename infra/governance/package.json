@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "aws-cdk-lib": "^2.180.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.7",
+    "aws-cdk": "^2.180.0",
+    "ts-node": "^10.9.2",
+    "typescript": "5.7.3"
+  },
+  "name": "@repo/infra-governance",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "deploy:org": "cdk deploy --app 'npx ts-node --prefer-ts-exts bin/organization.ts' --require-approval never",
+    "deploy:baseline": "cdk deploy --all --app 'npx ts-node --prefer-ts-exts bin/baseline.ts' --require-approval never",
+    "destroy:org": "cdk destroy --app 'npx ts-node --prefer-ts-exts bin/organization.ts'",
+    "destroy:baseline": "cdk destroy --app 'npx ts-node --prefer-ts-exts bin/baseline.ts'",
+    "diff:org": "cdk diff --app 'npx ts-node --prefer-ts-exts bin/organization.ts'",
+    "diff:baseline": "cdk diff --app 'npx ts-node --prefer-ts-exts bin/baseline.ts'",
+    "synth:org": "cdk synth --app 'npx ts-node --prefer-ts-exts bin/organization.ts'",
+    "synth:baseline": "cdk synth --app 'npx ts-node --prefer-ts-exts bin/baseline.ts'"
+  },
+  "version": "0.1.0"
+}

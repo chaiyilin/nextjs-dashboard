@@ -9,7 +9,7 @@
     "infra:deploy": "nx deploy infra"
   },
   "devDependencies": {
-    "nx": "^20.0.0",
+    "nx": "22.6.1",
     "typescript": "5.7.3"
   },
   "pnpm": {

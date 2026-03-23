@@ -4,11 +4,7 @@ import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
-import * as iam from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
-
-const GITHUB_ORG = "chaiyilin"; // TODO: set your GitHub org/username
-const GITHUB_REPO = "nextjs-dashboard";
 
 export class WebStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -107,34 +103,8 @@ export class WebStack extends cdk.Stack {
       distributionPaths: ["/_next/static/*"],
     });
 
-    // --- GitHub Actions OIDC ---
-    const provider = new iam.OpenIdConnectProvider(this, "GitHubOIDC", {
-      url: "https://token.actions.githubusercontent.com",
-      clientIds: ["sts.amazonaws.com"],
-    });
-
-    const deployRole = new iam.Role(this, "GitHubActionsRole", {
-      assumedBy: new iam.WebIdentityPrincipal(
-        provider.openIdConnectProviderArn,
-        {
-          StringEquals: {
-            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
-          },
-          StringLike: {
-            "token.actions.githubusercontent.com:sub": `repo:${GITHUB_ORG}/${GITHUB_REPO}:*`,
-          },
-        },
-      ),
-      managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName("AdministratorAccess"),
-      ],
-    });
-
     new cdk.CfnOutput(this, "SiteUrl", {
       value: `https://${distribution.distributionDomainName}`,
-    });
-    new cdk.CfnOutput(this, "GitHubActionsRoleArn", {
-      value: deployRole.roleArn,
     });
   }
 }

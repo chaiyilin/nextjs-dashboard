@@ -42,4 +42,7 @@ next-env.d.ts
 
 # infra
 infra/dist/
-infra/cdk.out/
+infra/**/cdk.out/
+
+.claude/worktrees
+.claude/settings.local.json

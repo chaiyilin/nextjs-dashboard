@@ -1,16 +1,11 @@
 {
-  "name": "infra-app-stack",
+  "name": "infra-governance",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "implicitDependencies": ["web", "infra-governance"],
   "targets": {
     "build":  { "executor": "nx:run-script", "options": { "script": "build" } },
     "synth":  { "executor": "nx:run-script", "options": { "script": "synth" } },
-    "deploy": {
-      "executor": "nx:run-script",
-      "options": { "script": "deploy" },
-      "dependsOn": [{ "projects": ["web"], "target": "opennext-build" }]
-    },
+    "deploy": { "executor": "nx:run-script", "options": { "script": "deploy" } },
     "diff":   { "executor": "nx:run-script", "options": { "script": "diff" } }
   }
 }

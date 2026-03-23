@@ -1,3 +1,4 @@
 packages:
   - 'web'
   - 'infra/app-stack'
+  - 'infra/governance'
