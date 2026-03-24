@@ -37,7 +37,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy CDK
-        run: pnpm --filter @repo/infra-app-stack deploy
+        run: pnpm --filter @repo/infra-app deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}

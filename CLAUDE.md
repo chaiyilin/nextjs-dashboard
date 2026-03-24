@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pnpm workspaces + Nx orchestration. Three packages:
 
 - `web` (`@repo/web`) — Next.js app with App Router
-- `infra/app-stack` (`@repo/infra-app-stack`) — CDK stack deploying the app to AWS
+- `infra/app` (`@repo/infra-app`) — CDK stack deploying the app to AWS
 - `infra/governance` (`@repo/infra-governance`) — CDK stacks for AWS Organizations and baseline IAM
 
 All commands below run from the repo root unless noted.
@@ -26,7 +26,7 @@ pnpm --filter @repo/web opennext-build  # build for OpenNext/Lambda deployment
 ```bash
 pnpm infra:synth    # cdk synth (app stack)
 pnpm infra:deploy   # cdk deploy --all (app stack)
-pnpm --filter @repo/infra-app-stack diff
+pnpm --filter @repo/infra-app diff
 ```
 
 ### Infra — governance
@@ -51,7 +51,7 @@ Authentication uses NextAuth v5 beta:
 
 All DB access uses the `postgres` package directly with `POSTGRES_URL` env var.
 
-### Infra — App Stack (`infra/app-stack/`)
+### Infra — App Stack (`infra/app/`)
 
 OpenNext serverless deployment on AWS:
 - S3 bucket for static assets (`/_next/static/*`)
