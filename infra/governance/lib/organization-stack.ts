@@ -1,5 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import * as organizations from "aws-cdk-lib/aws-organizations";
+import * as cr from "aws-cdk-lib/custom-resources";
 import { Construct } from "constructs";
 
 export interface OrganizationStackProps extends cdk.StackProps {}
@@ -8,19 +9,34 @@ export class OrganizationStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: OrganizationStackProps) {
     super(scope, id, props);
 
-    // Root OU ID is referenced via SSM or passed in; use the organization root
-    const rootId = new cdk.CfnParameter(this, "OrganizationRootId", {
-      type: "String",
-      description: "The ID of the AWS Organizations root (r-xxxx)",
+    // Dynamically fetch the organization root ID via the Organizations API
+    const listRoots = new cr.AwsCustomResource(this, "ListRoots", {
+      onCreate: {
+        service: "Organizations",
+        action: "listRoots",
+        parameters: {},
+        physicalResourceId: cr.PhysicalResourceId.of("ListRoots"),
+      },
+      onUpdate: {
+        service: "Organizations",
+        action: "listRoots",
+        parameters: {},
+        physicalResourceId: cr.PhysicalResourceId.of("ListRoots"),
+      },
+      policy: cr.AwsCustomResourcePolicy.fromSdkCalls({
+        resources: cr.AwsCustomResourcePolicy.ANY_RESOURCE,
+      }),
     });
 
+    const rootId = listRoots.getResponseField("Roots.0.Id");
+
     // --- Organizational Units ---
-    const workloadsOu = new organizations.CfnOrganizationalUnit(
+    const dashboardOu = new organizations.CfnOrganizationalUnit(
       this,
-      "WorkloadsOU",
+      "dashboard",
       {
-        name: "WorkloadsOU",
-        parentId: rootId.valueAsString,
+        name: "dashboard",
+        parentId: rootId,
       },
     );
 
@@ -31,11 +47,10 @@ export class OrganizationStack extends cdk.Stack {
           type: "String",
           description: emailDescription,
         }).valueAsString,
-        parentIds: [workloadsOu.attrId],
+        parentIds: [dashboardOu.attrId],
       });
 
-    makeAccount("StagingAccount", "Email address for the staging AWS account");
-    makeAccount("ProdAccount", "Email address for the production AWS account");
-
+    makeAccount("Staging", "Email address for the staging AWS account");
+    makeAccount("Prod", "Email address for the production AWS account");
   }
 }
